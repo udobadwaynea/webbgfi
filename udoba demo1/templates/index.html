@@ -1,0 +1,246 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#102b46">
+  <title>BGFIBank | Digital Banking</title>
+ <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<script src="{{ url_for('static', filename='script.js') }}" defer></script>
+
+</head>
+<body> 
+ 
+  <div class="app">
+    <aside class="sidebar" id="sidebar">
+      <a href="#" class="brand" aria-label="BGFIBank home">
+                <img
+          src="{{ url_for('static', filename='bgfi.jpg') }}"
+          alt="BGFIBank Logo"
+          style="width: 45px; height: 45px; object-fit: contain;"
+        >
+        <span>BGFIBank</span>
+
+
+        <span class="brand-light">bank</span>
+      </a>
+      
+            <div class="sidebar-clock">
+    <div id="live-time">Loading time...</div>
+    <div id="live-date">Loading date...</div>
+</div>
+
+      <p class="nav-label">MAIN MENU</p>
+      <nav class="navigation" aria-label="Main navigation">
+        <a href="#dashboard" class="nav-link active">
+          <span>▦</span> Dashboard
+        </a>
+
+        
+        
+        <a href="#transactions" class="nav-link">
+          <span>↔</span> Transactions
+        </a>
+        <a href="#accounts" class="nav-link">
+          <span>▣</span> My Accounts
+        </a>
+        <a href="#services" class="nav-link">
+          <span>◇</span> Services
+        </a>
+      </nav>
+
+      <div class="sidebar-bottom">
+        <div class="help-card">
+          <div class="help-icon">?</div>
+          <strong>Need help?</strong>
+          <p>This is a banking website.</p>
+          <a href="{{ url_for('contact') }}">Contact Support</a>
+        </div>
+        <p class="sidebar-foot">BGFIBank · 2026</p>
+      </div>
+    </aside>
+
+    <main class="main-content" id="dashboard">
+      <header class="topbar">
+        <button class="menu-button" id="menuButton"
+          aria-label="Toggle navigation" aria-expanded="false">☰</button>
+
+        <div class="breadcrumb">Pages / <strong>Dashboard</strong></div>
+
+
+<section class="dashboard-logo-showcase" aria-label="Bank logos">
+  <img
+    id="dashboardRotatingLogo"
+    src="{{ url_for('static', filename='bgfi.png') }}"
+    alt="BGFIBank logo"
+  >
+</section>
+
+
+        
+<div class="profile">
+  <div class="profile-avatar">JN</div>
+  <div class="profile-details">
+    <div class="profile-info">
+      <strong>Shin Suzuki</strong>
+      <span>BGFIBank customer</span>
+    </div>
+
+    <form action="{{ url_for('logout') }}" method="POST"
+          class="logout-form"
+          onsubmit="return confirm('Are you sure you want to log out?');">
+      <button type="submit" class="logout-button">Logout</button>
+    </form>
+  </div>
+</div>
+
+      </header>
+
+      <section class="welcome">
+        <div>
+          <p class="eyebrow">YOUR FINANCES AT A GLANCE</p>
+          <h1>Welcome to BGFIBank Web Banking<span>👋</span></h1>
+          <p>Here is what's happening with your account today.</p>
+        </div>
+        <span class="transaction-pill">●  ACCOUNT</span>
+      </section>
+      <section class="stats-grid" id="accounts">
+        <article class="balance-card">
+          <div class="card-heading">
+            <span>Total balance</span>
+            <span class="card-symbol">▣</span>
+          </div>
+<h2 id="balance" style="color: white !important; display: block !important;">$10 TEST</h2>          <p class="balance-note">Current Balance</p>
+          <div class="account-number">
+            <span> ACCOUNT</span>
+            <strong>•••• •••• 8715</strong>
+          </div>
+
+
+        </article>
+
+        <article class="stat-card">
+          <div class="stat-top">
+            <span>Income this month</span>
+            <span class="stat-icon income-icon">↙</span>
+          </div>
+          <h2 id="income">$0.00</h2>
+          <p class="stat-caption">Activity</p>
+          <span class="trend positive">↑ 0.2% <span>vs. last month</span></span>
+        </article>
+
+        <article class="stat-card">
+          <div class="stat-top">
+            <span>Expenses this month</span>
+            <span class="stat-icon expense-icon">↗</span>
+          </div>
+          <h2 id="expenses">$0.00</h2>
+          <p class="stat-caption">Activity</p>
+          <span class="trend neutral">Monthly overview</span>
+        </article>
+      </section>
+
+      <section class="actions-section" id="services">
+        <div class="section-heading">
+          <div>
+            <h2>Quick actions</h2>
+            <p>Try the interactive features.</p>
+          </div>
+        </div>
+
+        <div class="actions-grid">
+          <button class="action-card" id="transferButton">
+            <span class="action-icon transfer-icon">↗</span>
+            <strong>Transfer money</strong>
+            <span>Transfer</span>
+          </button>
+
+          <button class="action-card" id="depositButton">
+            <span class="action-icon deposit-icon">＋</span>
+            <strong>Add funds</strong>
+            <span>Increase balance</span>
+          </button>
+          <button class="action-card" id="statementButton">
+            <span class="action-icon statement-icon">▤</span>
+            <strong>View statement</strong>
+            <span>Review activity</span>
+          </button>
+        </div>
+      </section>
+
+      <section class="transactions-section" id="transactions">
+        <div class="section-heading">
+          <div>
+            <h2>Recent transactions</h2>
+            <p>Your latest account activity.</p>
+          </div>
+          <button class="text-button" id="viewAllButton">View all →</button>
+        </div>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>TRANSACTION</th>
+                <th>DATE</th>
+                <th>STATUS</th>
+                <th class="amount-column">AMOUNT</th>
+              </tr>
+            </thead>
+            <tbody id="transactionList">
+      
+            </tbody>
+          </table>
+        </div>
+        <p class="table-note">All transactions shown are current activities.</p>
+      </section>
+
+      <footer class="footer">
+        <span>© 2026 BGFIBank</span>
+        <span>BGFIBank banking services</span>
+      </footer>
+    </main>
+  </div>
+
+  <div class="modal-backdrop" id="modalBackdrop" hidden>
+    <section class="modal" role="dialog" aria-modal="true"
+      aria-labelledby="modalTitle">
+      <button class="modal-close" id="closeModal" aria-label="Close">×</button>
+      <p class="eyebrow">BGFIBANK</p>
+      <h2 id="modalTitle">Transfer funds</h2>
+      <p class="modal-description" id="modalDescription">
+        This action changes only the balance displayed on this page.
+      </p>
+
+<label for="bank">Recipient Bank</label>
+<input id="bank" name="bank" type="text"
+  placeholder="Enter bank name" maxlength="80" required>
+
+<label for="account">Recipient Bank Account Number</label>
+<input id="account" name="account" type="text"
+  inputmode="numeric" placeholder="Enter account number"
+  maxlength="20" required>
+
+      <form id="transferForm">
+        <label for="recipient">Recipient name</label>
+        <input id="recipient" name="recipient" type="text"
+          placeholder="e.g. Shin Suzuki" maxlength="50" required>
+
+        <label for="transferAmount">Amount (USD)</label>
+        <input id="transferAmount" name="amount" type="number"
+          placeholder="100.00" min="0.01" max="1000000"
+          step="0.01" required>
+
+        <p class="form-error" id="formError" role="alert"></p>
+        <button class="primary-button" type="submit" id="submitAction">
+           Transfer
+        </button>
+      </form>
+      <p class="security-note">Review your transaction details before submitting.</p>
+    </section>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+</body>
+</html>
