@@ -1,13 +1,2 @@
-2026-10-27T20:53:59.861286+00:00,bgfi@bnk.com,goodluck@,success,127.0.0.1,52140,5000
-2026-10-28T08:29:10.406108+00:00,bgfi@bnk.com,goodluck@,success,127.0.0.1,54672,5000
-2026-10-28T08:30:29.750345+00:00,bgfi@bnk.com,goodluck@,success,127.0.0.1,54674,5000
-2026-10-28T09:07:20.506392+00:00,bgfi@bnk.com,goodluck@,success,127.0.0.1,54729,5000
-2026-10-28T15:13:27.462214+00:00,bgfi@bnk.com,goodluck@,success,127.0.0.1,60531,5000
-2026-10-28T15:15:54.833461+00:00,bgfi@bnk.com,goodluck@,success,127.0.0.1,57983,5000
-2026-10-28T18:22:57.155458+00:00,bgfi@bnk.com,goodluck@,success,127.0.0.1,57012,5000
-2026-10-28T18:24:02.477978+00:00,bgfi@bnk.com,goodluck@,success,127.0.0.1,53566,5000
-2026-10-28T18:28:27.139366+00:00,bgfi@bnk.com,goodluck@,success,127.0.0.1,57597,5000
-2026-11-07T21:40:50.945199+00:00,bgfi@bnk.com,goodluck@,success,127.0.0.1,56831,5000
-2026-11-09T14:35:44.643568+00:00,jjn26@bgfibank.com,jeremyjn,success,127.0.0.1,65263,5000
-2026-11-09T14:42:23.624308+00:00,jjn26@bgfibank.com,jeremyjn,success,127.0.0.1,58743,5000
-2026-11-16T08:28:09.724900+00:00,shinsuzuki@bgfibank.com,suzuku1234,success,127.0.0.1,63750,5000
+time_utc,email_entered,result,client_ip,client_port,server_port
+2026-11-16T10:50:29.177706+00:00,shinsuzuki@demobank.com,success,127.0.0.1,51415,5000
