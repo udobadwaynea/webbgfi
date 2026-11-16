@@ -1,0 +1,224 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Login | BGFIBank</title>
+  <style>
+    body {
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 20px;
+      background: linear-gradient(135deg, #0c2340, #24547d);
+    }
+
+    .login-page {
+      width: 100%;
+      max-width: 430px;
+    }
+
+    .login-brand {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 25px;
+      color: white;
+      font-size: 26px;
+      font-weight: 800;
+    }
+
+    .login-logo {
+      display: grid;
+      width: 48px;
+      height: 48px;
+      place-items: center;
+      border-radius: 13px;
+      background: #d6b76b;
+      color: #0c2340;
+      font-size: 29px;
+    }
+
+    .login-card {
+      padding: 32px;
+      border-radius: 20px;
+      background: white;
+      box-shadow: 0 25px 70px rgb(0 0 0 / 20%);
+    }
+
+    .login-card h1 {
+      margin: 0 0 8px;
+      color: #102b46;
+      font-size: 27px;
+    }
+
+    .login-subtitle {
+      margin-bottom: 25px;
+      color: #8290a2;
+      font-size: 13px;
+    }
+
+    .login-card label {
+      display: block;
+      margin: 17px 0 7px;
+      color: #26384c;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .login-card input {
+      width: 100%;
+      padding: 13px;
+      border: 1px solid #dce3ed;
+      border-radius: 9px;
+      background: white;
+      color: #1b2a3b;
+    }
+
+    .login-card input:focus {
+      border-color: #3977e8;
+      outline: 2px solid #e1ebff;
+    }
+
+    .password-wrap {
+      display: flex;
+      gap: 8px;
+    }
+
+    .password-wrap input {
+      min-width: 0;
+    }
+
+    .show-password {
+      padding: 0 10px;
+      border: 1px solid #dce3ed;
+      border-radius: 9px;
+      background: white;
+      color: #315b91;
+      font-size: 12px;
+    }
+
+    .login-submit {
+      width: 100%;
+      margin-top: 24px;
+      padding: 14px;
+      border: 0;
+      border-radius: 9px;
+      background: #1464d2;
+      color: white;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .login-submit:hover {
+      background: #0e50ae;
+    }
+
+    .login-message {
+      margin-top: 14px;
+      color: #b42318;
+      font-size: 12px;
+    }
+
+    .login-note {
+      margin-top: 20px;
+      padding: 12px;
+      border-radius: 8px;
+      background: #fff5df;
+      color: #79501a;
+      font-size: 11px;
+      line-height: 1.6;
+    }
+
+    .back-link {
+      display: block;
+      margin-top: 20px;
+      color: #d9e7f8;
+      text-align: center;
+      font-size: 12px;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+  <main class="login-page">
+    <div class="login-brand">
+      <span class="login-logo">B</span>
+      <span>BGFIBank</span>
+    </div>
+
+    <section class="login-card">
+      <h1>Welcome back</h1>
+      <p class="login-subtitle">
+        Sign in to your BGFIBank account.
+      </p>
+
+
+<form id="loginForm" method="POST" action="{{ url_for('login') }}">
+        <label for="email">Email address</label>
+        <input
+          id="email"
+          name="email"
+          type="email"
+          autocomplete="username"
+          placeholder="info@example.com"
+          required
+        >
+
+        <label for="password">Password</label>
+        <div class="password-wrap">
+          <input
+            id="password"
+            name="password"
+            type="password"
+            autocomplete="current-password"
+            placeholder="Enter password"
+            required
+          >
+          <button class="show-password" id="togglePassword"
+            type="button" aria-pressed="false">
+            Show
+          </button>
+        </div>
+
+<button type="submit">Login</button>
+          Sign in to bank
+        </button>
+
+       
+<p class="login-message" id="loginMessage" </p>
+
+
+      <div class="login-Transaction-note">
+        <strong>Banking access.</strong>
+        Please don't share your credentials. secure your information..
+      </div>
+    </section>
+
+    <a class="back-link" href="index.html">
+      ← Return to BGFIBank dashboard
+    </a>
+  </main>
+
+  <script>
+    const loginForm = document.getElementById("loginForm");
+    const passwordInput = document.getElementById("password");
+    const togglePassword = document.getElementById("togglePassword");
+    const loginMessage = document.getElementById("loginMessage");
+
+    togglePassword.addEventListener("click", () => {
+      const showing = passwordInput.type === "text";
+      passwordInput.type = showing ? "password" : "text";
+      togglePassword.textContent = showing ? "Show" : "Hide";
+      togglePassword.setAttribute("aria-pressed", String(!showing));
+    });
+
+
+  </script>
+</body>
+</html>

@@ -1,0 +1,147 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us | BGFIBank</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        .contact-container {
+            max-width: 650px;
+            margin: 40px auto;
+            padding: 30px;
+            background: #ffffff;
+            border-radius: 16px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+        }
+
+        .contact-container h1 {
+            margin-bottom: 10px;
+            color: #123c32;
+        }
+
+        .contact-container p {
+            color: #64748b;
+            margin-bottom: 25px;
+        }
+
+        .contact-form label {
+            display: block;
+            margin-top: 18px;
+            font-weight: 600;
+        }
+
+        .contact-form input,
+        .contact-form textarea {
+            box-sizing: border-box;
+            width: 100%;
+            padding: 13px;
+            margin-top: 7px;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            font: inherit;
+        }
+
+        .contact-form textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        .contact-form button {
+            width: 100%;
+            margin-top: 22px;
+            padding: 14px;
+            border: none;
+            border-radius: 8px;
+            background: #123c32;
+            color: white;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .contact-form button:hover {
+            background: #1c5949;
+        }
+
+        .contact-nav {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .contact-nav a {
+            color: #123c32;
+            text-decoration: none;
+        }
+
+        .form-message {
+            padding: 12px;
+            border-radius: 8px;
+            background: #ecfdf5;
+            color: #166534;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+    <main class="contact-container">
+        <h1>Contact Us</h1>
+        <p>
+            Have a question or need help?
+            Send a message to the BGFIBank team.
+        </p>
+
+        {% if success %}
+            <div class="form-message">{{ success }}</div>
+        {% endif %}
+
+        {% if error %}
+            <div class="form-message">{{ error }}</div>
+        {% endif %}
+
+        <form class="contact-form" action="{{ url_for('contact') }}" method="POST">
+            <label for="name">Full Name</label>
+            <input
+                type="text"
+                id="name"
+                name="name"
+                placeholder="Enter your full name"
+                maxlength="100"
+                autocomplete="name"
+                required
+            >
+
+            <label for="email">Email Address</label>
+            <input
+                type="email"
+                id="email"
+                name="email"
+                placeholder="Enter your email address"
+                maxlength="254"
+                autocomplete="email"
+                required
+            >
+
+            <label for="message">Your Message</label>
+            <textarea
+                id="message"
+                name="message"
+                placeholder="Write your message here..."
+                maxlength="5000"
+                required
+            ></textarea>
+
+            <button type="submit">Send Message</button>
+        </form>
+
+        
+<div class="contact-nav">
+    <p>
+        Need help?
+        <a href="{{ url_for('contact') }}">Contact Support</a>
+    </p>
+
+    <a href="{{ url_for('dashboard') }}">Back to Dashboard</a>
+</div>
+

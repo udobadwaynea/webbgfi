@@ -1,0 +1,403 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BGFIBank | Transfer</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f3f6fa;
+            color: #1e293b;
+        }
+
+        .header {
+            background: #102b50;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            font-size: 22px;
+            font-weight: bold;
+        }
+
+        .label {
+            background: #fff3cd;
+            color: #795600;
+            text-align: center;
+            padding: 10px;
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        .card {
+            max-width: 480px;
+            margin: 45px auto;
+            padding: 28px;
+            background: white;
+            border-radius: 14px;
+            box-shadow: 0 8px 30px #14213d12;
+        }
+
+        h1 {
+            font-size: 24px;
+            margin-top: 0;
+        }
+
+        p {
+            color: #64748b;
+            line-height: 1.6;
+        }
+
+        label {
+            display: block;
+            margin-top: 18px;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        input {
+            width: 100%;
+            padding: 13px;
+            margin-top: 7px;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            font-size: 15px;
+        }
+
+        button {
+            width: 100%;
+            padding: 14px;
+            margin-top: 24px;
+            border: none;
+            border-radius: 8px;
+            background: #102b50;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #1e416f;
+        }
+
+        .progress-area {
+            display: none;
+            margin-top: 25px;
+        }
+
+        .progress-track {
+            height: 12px;
+            background: #e2e8f0;
+            border-radius: 20px;
+            overflow: hidden;
+            margin-top: 12px;
+        }
+
+        .progress-bar {
+            height: 100%;
+            width: 0;
+            background: #d49b22;
+            transition: width 0.15s linear;
+        }
+
+        .status {
+            font-weight: bold;
+            margin-top: 12px;
+            color: #102b50;
+        }
+
+        .notice {
+            display: none;
+            margin-top: 22px;
+            padding: 16px;
+            background: #fff3cd;
+            border-radius: 8px;
+            color: #795600;
+            line-height: 1.6;
+        }
+
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            color: #102b50;
+        }
+
+        .stamp {
+            font-size: 11px;
+            color: #64748b;
+            text-align: center;
+            margin-top: 25px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">BGFIBank</div>
+    <div class="label"> Web Banking — Transfer </div>
+
+    <main class="card">
+        <h1>Make a Transfer</h1>
+        <p>This is a transfer workflow.</p>
+
+        <form id="transferForm">
+            <label for="recipient">Bank recipient name</label>
+            <input id="recipient" type="text" placeholder="Enter a name" required>
+
+         
+<label for="bank">Recipient Bank</label>
+<input id="bank" type="text" placeholder="Enter bank name" required>
+
+<label for="account">Recipient Account Number</label>
+<input id="account" type="text" placeholder="Enter account number" required>
+
+<label for="swift">SWIFT / BIC Code</label>
+<input id="swift" type="text"
+       placeholder="Enter SWIFT/BIC code"
+       maxlength="11" required>
+
+
+
+            <label for="amount">Amount</label>
+            <input id="amount" type="number" min="1" step="0.01"
+                   placeholder="Enter an amount" required>
+
+           
+<button type="button" id="reviewButton"
+        onclick="showTransferReview()">
+    Review Transfer
+</button>
+
+<section id="transferSummary" style="display:none; margin-top:24px;
+    padding:18px; background:#f8fafc; border:1px solid #e2e8f0;
+    border-radius:10px;">
+    <h2 style="font-size:20px;">Review Transfer</h2>
+    <p><strong>Recipient:</strong> <span id="summaryRecipient"></span></p>
+    <p><strong>Recipient bank:</strong> <span id="summaryBank"></span></p>
+    <p><strong>SWIFT/BIC:</strong> <span id="summarySwift"></span></p>
+    <p><strong>Account number:</strong> <span id="summaryAccount"></span></p>
+    <p><strong>Amount:</strong> $<span id="summaryAmount"></span> USD</p>
+    <p style="font-size:13px;">review well before submitting.</p>
+    <button type="submit">Start Transfer</button>
+</section>
+
+
+        <section class="progress-area" id="progressArea" aria-live="polite">
+            <p id="progressMessage">Preparing transfer...</p>
+            <div class="progress-track">
+                <div class="progress-bar" id="progressBar"></div>
+            </div>
+            <div class="status" id="progressText">0%</div>
+        </section>
+
+        <div class="notice" id="notice" style="display:block;">
+
+<div id="Verification" style="display:none; margin-top:20px;
+    padding:20px; border:1px solid #cbd5e1; border-radius:12px;
+    background:#f8fafc;">
+
+
+    <h2> Verification Checkpoint</h2>
+
+    <p>
+        <strong>Transfer status: Paused at 74%</strong>
+    </p>
+
+    <p>
+        This is a verification code.
+        Please enter the verification code.
+    </p>
+    
+
+    <label for="Code">6-Digit Permission Code</label>
+<input
+    id="Code"
+    type="text"
+    inputmode="numeric"
+    pattern="[0-9]{6}"
+    maxlength="6"
+    placeholder="Enter 6-digit code"
+    autocomplete="off"
+>
+
+    <button type="button" id="verifyButton">
+        Submit Code
+    </button>
+
+    <p id="verificationMessage" aria-live="polite"></p>
+</div>
+
+        </div>
+
+
+        <a class="back-link" href="/">Return to dashboard</a>
+        <div class="stamp"> TRANSACTIONS</div>
+    </main>
+
+   <script>
+const form = document.getElementById("transferForm");
+const progressArea = document.getElementById("progressArea");
+const progressBar = document.getElementById("progressBar");
+const progressText = document.getElementById("progressText");
+const progressMessage = document.getElementById("progressMessage");
+const notice = document.getElementById("notice");
+
+const Verification = document.getElementById("Verification");
+const verifyButton = document.getElementById("verifyButton");
+const Code = document.getElementById("Code");
+const verificationMessage = document.getElementById("verificationMessage");
+
+verifyButton.addEventListener("click", function() {
+    const enteredCode = Code.value.trim();
+
+    if (enteredCode !== "123456") {
+        verificationMessage.textContent =
+            "Wrong verification code. Please try again.";
+        verificationMessage.style.color = "red";
+        return;
+    }
+
+    verificationMessage.textContent =
+        "Correct code! Verification unsuccessful.";
+    verificationMessage.style.color = "green";
+
+    progressBar.style.width = "74%";
+    progressText.textContent = "74%";
+    progressMessage.textContent =
+        "Transfer paused at 74%";
+});
+
+if (form) {
+    form.addEventListener("submit", function(event) {
+        event.preventDefault();
+
+        if (!form.reportValidity()) {
+            return;
+        }
+
+        progressArea.style.display = "block";
+        Verification.style.display = "none";
+
+        let progress = 0;
+        progressBar.style.width = "0%";
+        progressText.textContent = "0%";
+        progressMessage.textContent = "Preparing  transfer...";
+
+        const timer = setInterval(function() {
+            progress += 2;
+
+if (progress >= 74) {
+    progress = 74;
+    clearInterval(timer);
+
+    progressBar.style.width = "74%";
+    progressText.textContent = "74%";
+    progressMessage.textContent = "Transfer paused at 74%";
+
+    Verification.hidden = false;
+    Verification.style.display = "block";
+    Verification.style.visibility = "visible";
+    Verification.style.opacity = "1";
+
+    Verification.scrollIntoView({
+        behavior: "smooth",
+        block: "center"
+    });
+
+    return;
+}
+
+            progressBar.style.width = progress + "%";
+            progressText.textContent = progress + "%";
+            progressMessage.textContent = "Processing transfer...";
+        }, 100);
+    });
+}
+
+
+if (verifyButton) {
+    verifyButton.addEventListener("click", function() {
+        const enteredCode = Code.value.trim();
+
+        if (!/^\d{6}$/.test(enteredCode)) {
+            verificationMessage.textContent =
+                "Please enter your 6-digit permit code.";
+            return;
+        }
+
+        verificationMessage.textContent =
+            "Six-digit permit code accepted. Simulation complete.";
+        progressMessage.textContent =
+            " permit simulation completed. Transferred.";
+    });
+}
+
+        verificationMessage.textContent =
+            "Bank details verified. Transfer pending. " +
+            "Please verify your digital permit code..";
+
+        
+if (verifyButton) {
+    verifyButton.addEventListener("click", function() {
+        const enteredCode = Code.value.trim();
+
+        if (enteredCode !== "123456") {
+            verificationMessage.textContent =
+                "Incorrect code. Please try again.";
+            return;
+        }
+
+        verificationMessage.textContent =
+            "Code accepted. Completing...";
+
+        progressMessage.textContent =
+            "Transfer completed.";
+        progressBar.style.width = "74%";
+        progressText.textContent = "74%";
+        notice.querySelector("strong").textContent =
+            "Verification completed";
+        verifyButton.disabled = true;
+        Code.disabled = true;
+    });
+}
+
+
+function showTransferReview() {
+    const recipient = document.getElementById("recipient");
+    const bank = document.getElementById("bank");
+    const swift = document.getElementById("swift");
+    const account = document.getElementById("account");
+    const amount = document.getElementById("amount");
+
+    if (!recipient || !bank || !account || !amount || !swift) {
+        alert("A transfer form field is missing. Please check the field IDs.");
+        return;
+    }
+
+    if (!recipient.value.trim() ||
+        !bank.value.trim() ||
+        !account.value.trim() ||
+        !amount.value.trim() ||
+        !swift.value.trim()) {
+        alert("Please complete all transfer fields first.");
+        return;
+    }
+
+    document.getElementById("summaryRecipient").textContent =
+        recipient.value;
+    document.getElementById("summaryBank").textContent = bank.value;
+    document.getElementById("summarySwift").textContent =
+        swift.value;
+    document.getElementById("summaryAccount").textContent = account.value;
+    document.getElementById("summaryAmount").textContent =
+        Number(amount.value).toFixed(2);
+
+    document.getElementById("transferSummary").style.display = "block";
+}
+</script>
